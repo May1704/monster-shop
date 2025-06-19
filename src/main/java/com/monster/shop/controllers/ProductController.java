@@ -2,9 +2,7 @@ package com.monster.shop.controllers;
 
 import com.monster.shop.models.Product;
 import com.monster.shop.services.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,7 +21,22 @@ public class ProductController {
     }
 
     @GetMapping("/api/products/{productId}")
-    public Product getProductsById(@PathVariable Long id) {
-        return productService.getProductsById(id);
+    public Product getProductsById(@PathVariable Long productId) {
+        return productService.getProductsById(productId);
+    }
+
+    @PostMapping("/api/products")
+    public void addProduct(@RequestBody Product newProduct){
+        productService.addProduct(newProduct);
+    }
+
+    @PutMapping("/api/products/{id}")
+    public Product update(@PathVariable Long id, @RequestBody Product product) {
+        return productService.update(id, product);
+    }
+
+    @DeleteMapping("/api/products/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        productService.deleteProduct(id);
     }
 }
