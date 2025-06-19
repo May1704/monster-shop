@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,21 +16,16 @@ public class ProductService {
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-
-    //Get all products
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
-    //Get a product by ID
     public Product getProductsById(Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Product not found with ID: " + id));
     }
-    //Create a product
     public Product addProduct(Product newProduct) {
         return productRepository.save(newProduct);
     }
-    //Update a product
     public Product update(Long id, Product updatedProduct) {
         Product existing = getProductsById(id);
         existing.setName(updatedProduct.getName());
@@ -42,9 +36,7 @@ public class ProductService {
         existing.setFeatured(updatedProduct.isFeatured());
         return productRepository.save(existing);
     }
-    //Delete product
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
-
 }
